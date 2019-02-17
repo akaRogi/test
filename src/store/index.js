@@ -13,6 +13,7 @@ Vue.use(Vuex)
 let store = new Vuex.Store({
   // 定义公用数据
   state: {
+    title: '',
     p: 0,
     Nav,
     homeNav,
@@ -25,6 +26,9 @@ let store = new Vuex.Store({
     scroll: 60
   },
   mutations: {
+    titleFn (store, vla) {
+      store.title = vla
+    },
     updateUrl (store, url) {
       // 首页的搜索切换功能
       store.url = url

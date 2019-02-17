@@ -22,7 +22,8 @@ export default {
     return {
       list: this.$store.state.top250,
       End: 0,
-      HeightStyle: ''
+      HeightStyle: '',
+      off: true
     }
   },
   methods: {
@@ -33,31 +34,53 @@ export default {
     }
   },
   mounted () {
-    this.End += 25
+    function IsPC () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone',
+        'SymbianOS', 'Windows Phone',
+        'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
+    }
+    var flag = IsPC()
+    if (flag) {
+      this.End += 250
+      this.off = false
+    } else {
+      this.End += 25
+    }
   },
   watch: {
     End () {
-      this.requestheight()
-      this.$nextTick(() => {
-        // $refs绑定元素
-        if (!this.scroll) {
-          this.scroll = new BScroll(this.$refs.wrapper, {
-            // 开启点击事件 默认为false
-            click: true,
-            pullUpLoad: {
-              threshold: -180 // 当上拉距离超过30px时触发 pullingUp 事件
-            }
-          })
-          this.scroll.on('pullingUp', () => {
-            this.End += 25
-            this.scroll.finishPullUp()
-          })
-          // console.log(this.scroll)
-        } else if (!this.$refs.wrapper) {
-        } else {
-          this.scroll.refresh()
-        }
-      })
+      if (this.off) {
+        this.requestheight()
+        this.$nextTick(() => {
+          // $refs绑定元素
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.wrapper, {
+              // 开启点击事件 默认为false
+              click: true,
+              pullUpLoad: {
+                threshold: -180 // 当上拉距离超过30px时触发 pullingUp 事件
+              }
+            })
+            this.scroll.on('pullingUp', () => {
+              this.End += 25
+              this.scroll.finishPullUp()
+            })
+            // console.log(this.scroll)
+          } else if (!this.$refs.wrapper) {
+          } else {
+            this.scroll.refresh()
+          }
+        })
+      }
     }
   }
 }

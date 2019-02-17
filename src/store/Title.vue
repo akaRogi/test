@@ -4,7 +4,7 @@
       <div class="row">
         <div class="header_title">
           <span class="iconfont icon-sheji"></span>
-          <h1>首页</h1>
+          <h1>{{$store.state.title}}</h1>
         </div>
       </div>
     </div>
@@ -13,7 +13,21 @@
 
 <script>
 export default {
-  name: 'Title'
+  name: 'Title',
+  methods: {
+    titleFn () {
+      let name = this.$route.meta.name
+      this.$store.commit('titleFn', name)
+    }
+  },
+  created () {
+    this.titleFn()
+  },
+  watch: {
+    $route () {
+      this.titleFn()
+    }
+  }
 }
 </script>
 

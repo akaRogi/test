@@ -213,6 +213,18 @@ export default {
   height: 72px;
   padding-right: 40px;
 }
+@media (max-width: 631px){
+  #main .h_sect {
+    position: relative;
+    width: 100%;
+    height: 72px;
+    padding-right: 0;
+  }
+  #home .h_Fea li{
+    font-size: 16px;
+    padding: 16px 4px;
+  }
+}
 .left-enter{
   left:50px
 }
